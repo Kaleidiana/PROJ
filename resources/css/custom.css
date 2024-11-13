@@ -1,0 +1,60 @@
+/* public/css/custom.css */
+.appointments-title {
+    color: #3490dc;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.appointments-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+}
+
+.appointments-table th, .appointments-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.appointments-table th {
+    background-color: #343a40;
+    color: white;
+}
+
+.appointments-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.appointments-table tr:hover {
+    background-color: #ddd;
+}
+
+.btn-edit {
+    color: white;
+    background-color: #ffc107;
+    padding: 0.4rem 0.6rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-delete {
+    color: white;
+    background-color: #dc3545;
+    padding: 0.4rem 0.6rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* In custom.css */
+.admin-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.user-view {
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+}

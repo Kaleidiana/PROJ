@@ -1,27 +1,22 @@
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($properties as $property)
-        <tr>
-            <td>{{ $property->id }}</td>
-            <td>{{ $property->title }}</td>
-            <td>${{ number_format($property->price, 2) }}</td>
-            <td>
-                <a href="{{ route('properties.edit', $property) }}" class="btn btn-warning btn-sm">Edit</a>
-                <form action="{{ route('properties.destroy', $property) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                </form>
-            </td>
-        </tr>
+<!-- resources/views/dashboard.blade.php -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to the Car Dashboard</h1>
+
+    <h2>Cars:</h2>
+    <ul>
+        @foreach ($cars as $car)
+            <li>{{ $car->name }} - {{ $car->model }} - {{ $car->year }}</li>
         @endforeach
-    </tbody>
-</table>
+    </ul>
+
+    <!-- Add additional car management options here, like creating, editing, or deleting cars -->
+</body>
+</html>

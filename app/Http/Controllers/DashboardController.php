@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Property;
-use App\Models\Appointment;
+use App\Models\Car; // Use the Car model to fetch car data
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function dashboard()
+    // Method to show the dashboard
+    public function index()
     {
-        $properties = Property::all();
-        $appointments = Appointment::with('property', 'user')->get();
+        // Fetch all cars from the database
+        $cars = Car::all();
 
-        return view('dashboard', compact('properties', 'appointments'));
+        // Return the dashboard view, passing the cars data
+        return view('dashboard', compact('cars'));
     }
 }
-
