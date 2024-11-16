@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Car; // Use the Car model to fetch car data
+use App\Models\Car;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -13,7 +13,7 @@ class DashboardController extends Controller
         // Fetch all cars from the database
         $cars = Car::all();
 
-        // Return the dashboard view, passing the cars data
-        return view('dashboard', compact('cars'));
+        // Return the admin car management view
+        return view('cars.index', compact('cars'));
     }
 }

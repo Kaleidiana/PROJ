@@ -3,8 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\DashboardController; // Add this import for the DashboardController
-use App\Http\Controllers\PageController; // Add this import for the PageController
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 // Route for the homepage for unauthenticated users
@@ -14,23 +14,21 @@ Route::get('/', function () {
 
 // Route for the admin dashboard
 Route::get('/admin', [AdminController::class, 'index'])
-    ->middleware(['auth', 'admin'])
+    ->middleware(['auth', 'admin']) // Ensure the user is authenticated and an admin
     ->name('admin.index');
 
-// Route for the dashboard
+// Route for the dashboard (user dashboard)
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth') // Only authenticated users can access the dashboard
     ->name('dashboard');
 
-
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-// Route for managing cars (CRUD operations)
-Route::middleware('auth')->group(function () {
+// Group routes for admin section
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    // Route for the admin cars management (CRUD)
     Route::resource('cars', CarController::class);
 });
 
-
-// Group of routes that require authentication
+// Group routes that require authentication (for regular users)
 Route::middleware('auth')->group(function () {
     // Profile management routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -40,9 +38,7 @@ Route::middleware('auth')->group(function () {
     // Route for the homepage (for authenticated users)
     Route::get('/home', [PageController::class, 'home'])->name('home'); // Authenticated users' homepage
 
-
-
-    // Route for the About Us page.
+    // Route for the About Us page
     Route::get('/about', [PageController::class, 'about'])->name('about');
 
     // Route for the Services page
@@ -50,7 +46,6 @@ Route::middleware('auth')->group(function () {
 
     // Route for the Contact Us page
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-    // Route to handle contact form submission
     Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
 });
 

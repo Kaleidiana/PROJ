@@ -11,7 +11,10 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}">MOTORSHIFT</a>
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <img src="{{ asset('images/logo.png') }}" alt="MOTORSHIFT" class="navbar-logo">
+            </a>
+
             <!-- Toggler for small screens -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -20,16 +23,16 @@
             <!-- Navbar links (collapsed on small screens) -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    <li class="nav-item {{ request()->is('home') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('home') }}">HOME</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ request()->is('about') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('about') }}">ABOUT</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ request()->is('services') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('services') }}">SERVICES</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ request()->is('contact') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('contact') }}">CONTACT</a>
                     </li>
                 </ul>
@@ -37,14 +40,12 @@
         </div>
     </nav>
 
-
     <!-- Footer -->
-    <footer class="text-center bg-primary py-3">
+    <footer class="text-center text-white py-3" style="background-color: #1f1e1e;">
         <p>&copy; 2024 MotorShift. All rights reserved.</p>
     </footer>
 
     @yield('content')
-
 
     <!-- Bootstrap JS Bundle (includes Popper.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

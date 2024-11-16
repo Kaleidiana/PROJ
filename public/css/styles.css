@@ -1,12 +1,43 @@
 /* Basic Styles */
 body {
     background-color: #f8f9fa;
-    font-family: Arial, sans-serif;
+    font-family: Roboto Plus;
     margin: 0;
     min-height: 100vh; /* Ensure the body takes the full height */
     display: flex;
     flex-direction: column; /* Layout to handle footer placement */
 }
+
+
+/* styles.css */
+
+
+/* For hover effect */
+/* Apply underline only on hover */
+.navbar-nav .nav-link {
+    position: relative; /* Needed for positioning */
+    text-decoration: none; /* Remove the underline by default */
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #8a036d !important; /* Hover color */
+    text-decoration: underline;
+    text-underline-position: under; /* Ensure the underline is below the text */
+    padding-bottom: 10px; /* Add space between text and underline */
+}
+
+/* For active link - keep the underline even when the link is not hovered */
+.navbar-nav .nav-item.active .nav-link {
+    color: #8a036d !important; /* Active link color */
+    text-decoration: underline; /* Keep the underline on active link */
+    text-underline-position: under; /* Keep the underline below the text */
+    padding-bottom: 10px; /* Adds spacing when the link is active */
+}
+
+
+
 
 /* Container for the page content */
 .container {
@@ -17,7 +48,7 @@ body {
 
 /* Footer styles */
 footer {
-    background-color: #007bff;
+    background-color: #8a036d;
     color: white;
     text-align: center;
     position: fixed;
@@ -35,13 +66,13 @@ footer {
 
 /* Home Page Specific Styles */
 h1 {
-    color: #007bff;
+    color: #8a036d;
     font-size: 3rem;
 }
 
 .lead {
     font-size: 1.25rem;
-    color: #555;
+    color: #8a036d;
 }
 
 /* Responsive Styling */
@@ -58,7 +89,7 @@ h1 {
 /* About Us Page Styles */
 .about-container {
     padding: 80px 20px;
-    max-width: 800px;
+    max-width: 850px;
     margin: 0 auto;
     text-align: center;
 }
@@ -67,7 +98,7 @@ h1 {
     margin-bottom: 25px;
     font-size: 2.5rem;
     font-weight: bold;
-    color: #007bff;
+    color: #8a036d;
     opacity: 0;
     transform: translateX(-100%);
     animation: slideInLeft 1.5s ease-out forwards;
@@ -104,7 +135,7 @@ h1 {
         font-size: 2rem;
     }
     .about-description {
-        font-size: 1.1rem;
+        font-size: 1.4rem;
     }
 }
 
@@ -123,19 +154,19 @@ h1 {
     padding: 15px;
     border-radius: 10px;
     background-color: #f4f4f4;
-    box-shadow: 0 4px 8px rgba(96, 183, 241, 0.849);
+    box-shadow: 0 4px 8px rgba(3, 144, 238, 0.849);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 20px; /* Adds space between service boxes */
 }
 
 .service-item:hover {
     transform: translateX(10px); /* Slight movement to the right */
-    box-shadow: 0 6px 12px rgba(103, 104, 104, 0.849);
+    box-shadow: 0 6px 12px rgba(0, 83, 83, 0.849);
 }
 
 .service-icon {
     font-size: 3rem;
-    color: #007bff;
+    color: #8a036d;
 }
 
 .service-description h4 {
@@ -153,7 +184,7 @@ h1 {
 h1 {
     font-size: 3rem;
     font-weight: 700;
-    color: #007bff;
+    color: #8a036d;
     margin-bottom: 30px;
 }
 
@@ -170,4 +201,72 @@ h1 {
     .service-icon {
         font-size: 4rem;
     }
+}
+
+/* Styling for the Contact Us page */
+.container1 {
+    max-width: 600px;
+    max-height: 800px;
+    margin: 20px auto;
+    margin-bottom: 10%;
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading and paragraph styling */
+h1 {
+    color: #c903ae;
+    font-size: 2rem;
+}
+
+p {
+    color: #555;
+    font-size: 1.5rem;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 600;
+    color: #333;
+}
+
+input, textarea {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+textarea {
+    min-height: 150px;
+}
+
+/* Button Styling */
+.btn-submit {
+    background-color: #8a036d;
+    color: white;
+    font-size: 1.2rem;
+    padding: 12px 30px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #7a035d;
+}
+
+/* Additional spacing for better layout */
+.mb-4 {
+    margin-bottom: 20px !important;
+}
+/* NAVBAR LOGO */
+.navbar-logo {
+    height: 100px; /* Adjust the size of the logo */
+    width: auto; /* Maintain aspect ratio */
 }

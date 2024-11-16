@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-center">Welcome to MotoShift!</h1>
+        <h1 class="text-center">Welcome to MotorShift!</h1>
         <p class="lead text-center">Your dream car is just a few clicks away.</p>
 
         <div class="row">
@@ -21,9 +21,9 @@
             <!-- Car 2 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="{{ asset('images/car6.jpg') }}" class="card-img-top" alt="Car 2">
+                    <img src="{{ asset('images/car2.jpg') }}" class="card-img-top" alt="Car 2">
                     <div class="card-body">
-                        <h5 class="card-title">Bugatti</h5>
+                        <h5 class="card-title">Range Rover</h5>
                         <p class="card-text">Description of the car.</p>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
@@ -33,9 +33,9 @@
             <!-- Car 3 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="{{ asset('images/car3.jpg') }}" class="card-img-top" alt="Car 3">
+                    <img src="{{ asset('images/car6.jpg') }}" class="card-img-top" alt="Car 3">
                     <div class="card-body">
-                        <h5 class="card-title">Ferrari</h5>
+                        <h5 class="card-title">Maybach</h5>
                         <p class="card-text">Description of the car.</p>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="card">
                     <img src="{{ asset('images/car4.jpg') }}" class="card-img-top" alt="Car 4">
                     <div class="card-body">
-                        <h5 class="card-title">Mercedes</h5>
+                        <h5 class="card-title">Porshe</h5>
                         <p class="card-text">Description of the car.</p>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
@@ -71,9 +71,9 @@
             <!-- Car 6 -->
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="{{ asset('images/car2.jpg') }}" class="card-img-top" alt="Car 6">
+                    <img src="{{ asset('images/car3.jpg') }}" class="card-img-top" alt="Car 6">
                     <div class="card-body">
-                        <h5 class="card-title">Porsche</h5>
+                        <h5 class="card-title">Mercedez</h5>
                         <p class="card-text">Description of the car.</p>
                         <a href="#" class="btn btn-primary">View Details</a>
                     </div>
@@ -84,7 +84,5 @@
 @endsection
 
 @section('footer')
-    <footer class="text-center bg-primary text-white py-3">
-        <p>&copy; 2024 MotoShift. All rights reserved.</p>
-    </footer>
+
 @endsection

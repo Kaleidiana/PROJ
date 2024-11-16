@@ -14,13 +14,7 @@ class Car extends Model
 
     // Define which attributes are mass assignable
     protected $fillable = [
-        'carname', // Add this line
-        'make',
-        'model',
-        'year',
-        'price',
-        'image',
-        'description',
+        'name', 'price', 'description', 'image'
     ];
 
     // Define relationships (if any)
