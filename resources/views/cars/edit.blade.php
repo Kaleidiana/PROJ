@@ -1,5 +1,3 @@
-<!-- resources/views/cars/edit.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -11,9 +9,9 @@
             @method('PUT')
 
             <div class="form-group">
-                <label for="name">Car Name</label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $car->name) }}" required>
-                @error('name')
+                <label for="carname">Car Name</label>
+                <input type="text" class="form-control @error('carname') is-invalid @enderror" id="carname" name="carname" value="{{ old('carname', $car->carname) }}" required>
+                @error('carname')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
@@ -37,6 +35,9 @@
             <div class="form-group">
                 <label for="image">Car Image (optional)</label>
                 <input type="file" class="form-control-file @error('image') is-invalid @enderror" id="image" name="image">
+                @if($car->image)
+                    <p>Current Image: <img src="{{ asset('storage/' . $car->image) }}" alt="Current Car Image" width="100"></p>
+                @endif
                 @error('image')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror

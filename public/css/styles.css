@@ -1,45 +1,36 @@
-/* Example Custom Styles */
+/* Basic Styles */
 body {
-    background-color: #f8f9fa; /* Light gray background */
+    background-color: #f8f9fa;
     font-family: Arial, sans-serif;
+    margin: 0;
+    min-height: 100vh; /* Ensure the body takes the full height */
+    display: flex;
+    flex-direction: column; /* Layout to handle footer placement */
 }
 
-.navbar {
-    background-color: #007bff; /* Blue navbar */
-}
-
-.navbar-brand, .nav-link {
-    color: white !important; /* White text on the navbar */
-}
-
+/* Container for the page content */
 .container {
-    padding: 20px;
+    flex: 1;
+    padding: 30px 15px; /* Add padding around the content */
+    padding-bottom: 60px; /* Add space at the bottom to prevent content from being hidden under the footer */
 }
 
-h1 {
-    font-size: 2.5rem;
-    color: #333;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-ul li {
-    margin-bottom: 10px;
-}
-
-.btn-primary {
-    background-color: #28a745; /* Green button */
-    border-color: #28a745;
-}
-
+/* Footer styles */
 footer {
     background-color: #007bff;
     color: white;
-    padding: 10px 0;
     text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0; /* Adjust the footer padding */
+    z-index: 9999; /* Ensure the footer stays on top of other elements */
+}
+
+/* Card styles */
+.card {
+    margin-bottom: 20px;
 }
 
 /* Home Page Specific Styles */
@@ -52,7 +43,8 @@ h1 {
     font-size: 1.25rem;
     color: #555;
 }
-/* Make the text larger on mobile */
+
+/* Responsive Styling */
 @media (max-width: 768px) {
     h1 {
         font-size: 2.5rem;
@@ -63,12 +55,119 @@ h1 {
 }
 
 
-footer {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 0;
+/* About Us Page Styles */
+.about-container {
+    padding: 80px 20px;
+    max-width: 800px;
+    margin: 0 auto;
     text-align: center;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+}
+
+.about-title {
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #007bff;
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideInLeft 1.5s ease-out forwards;
+}
+
+.about-description {
+    font-size: 1.3rem;
+    color: #070707;
+    margin-top: 20px;
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideInLeft 1.5s 0.5s ease-out forwards; /* Delay for the paragraph */
+    line-height: 1.8;
+}
+
+/* Keyframes for the sliding animation */
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 768px) {
+    .about-container {
+        padding: 50px 15px;
+    }
+    .about-title {
+        font-size: 2rem;
+    }
+    .about-description {
+        font-size: 1.1rem;
+    }
+}
+
+/* Global styles for services section */
+/* Global styles for services section */
+.service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Adds space between the service items */
+}
+
+.service-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f4f4f4;
+    box-shadow: 0 4px 8px rgba(96, 183, 241, 0.849);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px; /* Adds space between service boxes */
+}
+
+.service-item:hover {
+    transform: translateX(10px); /* Slight movement to the right */
+    box-shadow: 0 6px 12px rgba(103, 104, 104, 0.849);
+}
+
+.service-icon {
+    font-size: 3rem;
+    color: #007bff;
+}
+
+.service-description h4 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.service-description p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #007bff;
+    margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .service-list {
+        gap: 20px; /* Less space between items on smaller screens */
+    }
+
+    .service-item {
+        flex-direction: column; /* Stack items vertically on small screens */
+        text-align: center;
+    }
+
+    .service-icon {
+        font-size: 4rem;
+    }
 }

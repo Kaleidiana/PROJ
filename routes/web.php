@@ -14,7 +14,7 @@ Route::get('/', function () {
 
 // Route for the admin dashboard
 Route::get('/admin', [AdminController::class, 'index'])
-    ->middleware('admin')
+    ->middleware(['auth', 'admin'])
     ->name('admin.index');
 
 // Route for the dashboard
@@ -22,9 +22,13 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware('auth') // Only authenticated users can access the dashboard
     ->name('dashboard');
 
+
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 // Route for managing cars (CRUD operations)
-Route::resource('cars', CarController::class)
-    ->middleware('auth'); // Only authenticated users can access these routes
+Route::middleware('auth')->group(function () {
+    Route::resource('cars', CarController::class);
+});
+
 
 // Group of routes that require authentication
 Route::middleware('auth')->group(function () {
@@ -35,6 +39,8 @@ Route::middleware('auth')->group(function () {
 
     // Route for the homepage (for authenticated users)
     Route::get('/home', [PageController::class, 'home'])->name('home'); // Authenticated users' homepage
+
+
 
     // Route for the About Us page.
     Route::get('/about', [PageController::class, 'about'])->name('about');

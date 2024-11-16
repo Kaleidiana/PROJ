@@ -1,38 +1,44 @@
-<!-- resources/views/cars/index.blade.php -->
+<!-- resources/views/admin/cars/index.blade.php -->
 
 @extends('layouts.app')
 
 @section('content')
     <div class="container">
-        <h1>Cars</h1>
-        <a href="{{ route('cars.create') }}" class="btn btn-primary">Add New Car</a>
+        <h1>Manage Cars</h1>
+        <a href="{{ route('cars.create') }}" class="btn btn-primary mb-3">Add New Car</a>
 
-        @if (session('success'))
-            <div class="alert alert-success mt-3">
-                {{ session('success') }}
-            </div>
-        @endif
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Car Name</th>  <!-- Changed to 'Car Name' -->
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th>Actions</th>
 
-        <div class="row mt-4">
-            @foreach ($cars as $car)
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="{{ asset('storage/'.$car->image) }}" class="card-img-top" alt="{{ $car->name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $car->name }}</h5>
-                            <p class="card-text">{{ Str::limit($car->description, 100) }}</p>
-                            <p><strong>Price: </strong>${{ number_format($car->price, 2) }}</p>
-                            <a href="{{ route('cars.show', $car->id) }}" class="btn btn-info">View Details</a>
-                            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-warning">Edit</a>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($cars as $car)
+                    <tr>
+                        <td>{{ $car->id }}</td>
+                        <td>{{ $car->carname }}</td>  <!-- Changed to 'carname' -->
+                        <td>{{ $car->price }}</td>
+                        <td>{{ Str::limit($car->description, 50) }} <!-- Show first 50 characters of description --></td>
+                        <td>
+                            <a href="{{ route('cars.show', $car->id) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('cars.destroy', $car->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
     </div>
 @endsection

@@ -15,12 +15,10 @@ class CreateCarsTable extends Migration
     {
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
-            $table->string('make');
-            $table->string('model');
-            $table->integer('year');
-            $table->decimal('price', 10, 2);
-            $table->string('image')->nullable();  // To store the image filename
-            $table->text('description')->nullable();
+            $table->string('carname');// Make sure it's not nullable
+            $table->integer('price');
+            $table->text('description')->nullable(); // Nullable in case it's empty
+            $table->string('image')->nullable(); // Nullable in case no image is provided
             $table->timestamps();
         });
     }

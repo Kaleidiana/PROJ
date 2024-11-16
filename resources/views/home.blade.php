@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-center">Welcome to Our Car E-Commerce Platform!</h1>
+        <h1 class="text-center">Welcome to MotoShift!</h1>
         <p class="lead text-center">Your dream car is just a few clicks away.</p>
 
         <div class="row">
@@ -81,4 +81,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('footer')
+    <footer class="text-center bg-primary text-white py-3">
+        <p>&copy; 2024 MotoShift. All rights reserved.</p>
+    </footer>
 @endsection
