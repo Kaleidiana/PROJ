@@ -65,7 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/car/{car}', [CarController::class, 'show'])->name('car.details');
     Route::get('/order/{car}', [OrderController::class, 'create'])->name('order.car');
     // Order Route
-    Route::get('/order/{car}', [OrderController::class, 'create'])->name('order.car');
+    
 
     // Store the order details (POST request)
     Route::post('/order/{car}', [OrderController::class, 'store'])->name('order.store');

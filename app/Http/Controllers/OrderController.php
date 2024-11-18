@@ -1,38 +1,41 @@
 <?php
+// app/Http/Controllers/OrderController.php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+// app/Http/Controllers/OrderController.php
 
-class CreateOrdersTable extends Migration
+namespace App\Http\Controllers;
+
+use App\Models\Order;
+use App\Models\Car;
+use Illuminate\Http\Request;
+
+class OrderController extends Controller
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    // Store the order details (POST request)
+    public function store(Request $request, Car $car)
     {
-        Schema::create('orders', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('car_id') // Reference to the Car model
-                  ->constrained()  // Automatically adds a foreign key constraint
-                  ->onDelete('cascade'); // If a car is deleted, the order should be deleted as well
-            $table->string('customer_name'); // Name of the customer
-            $table->string('customer_email'); // Customer's email address
-            $table->integer('quantity'); // Number of cars ordered
-            $table->decimal('total_price', 8, 2); // Total price of the order
-            $table->timestamps(); // For created_at and updated_at timestamps
-        });
+        // Validate the incoming order data
+        $request->validate([
+            'user_id' => 'required|exists:users,id', // Validate that user exists
+            'car_id' => 'required|exists:cars,id',  // Validate that car exists
+            'quantity' => 'required|integer|min:1', // Validate quantity
+        ]);
+
+        // Calculate the total price (assumes `car` model has a `price` attribute)
+        $totalPrice = $car->price * $request->quantity; // Total price is based on quantity
+
+        // Create the order in the database
+        Order::create([
+            'user_id' => auth()->id(), // Assuming the user is authenticated
+            'car_id' => $car->id,
+            'quantity' => $request->quantity, // Store the quantity of cars ordered
+            'total_price' => $totalPrice,
+            'status' => 'pending', // Default status
+        ]);
+
+        // Redirect or return success message
+        return redirect()->route('cars.show', $car)->with('success', 'Order placed successfully!');
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('orders');
-    }
+    // Other methods for the controller (show, update, delete) can be added here if needed
 }
