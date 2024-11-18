@@ -62,10 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/paypal/cancel', [PayPalController::class, 'cancelPayment'])->name('paypal.cancel');
 
     //Routes for ordering
+    // Route to view a single car's details
+    Route::get('cars/{car}', [CarController::class, 'show'])->name('cars.show');
+
     Route::get('/car/{car}', [CarController::class, 'show'])->name('car.details');
     Route::get('/order/{car}', [OrderController::class, 'create'])->name('order.car');
     // Order Route
-    
+
 
     // Store the order details (POST request)
     Route::post('/order/{car}', [OrderController::class, 'store'])->name('order.store');
