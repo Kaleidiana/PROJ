@@ -1,21 +1,29 @@
-<!-- resources/views/cars/show.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
     <div class="container">
         <h1>{{ $car->carname }}</h1>
 
+        <div class="row">
+            <!-- Car Image -->
+            <div class="col-md-6">
+                <img src="{{ asset('storage/'.$car->image) }}" alt="{{ $car->carname }}" class="img-fluid mb-3">
+            </div>
 
-        <p><strong>Price: </strong>${{ number_format($car->price, 2) }}</p>
-        <p><strong>Description: </strong>{{ $car->description }}</p>
+            <div class="col-md-6">
+                <!-- Car Details -->
+                <p><strong>Price: </strong>${{ number_format($car->price, 2) }}</p>
+                <p><strong>Description: </strong>{{ $car->description }}</p>
 
-        <img src="{{ asset('storage/'.$car->image) }}" alt="{{ $car->name }}" class="img-fluid mb-3">
+                <!-- Order Now Button -->
+                <form action="{{ route('order.create', $car->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-success">Order Now</button>
+                </form>
 
-
-
-        <a href="{{ route('cars.index') }}" class="btn btn-secondary">Back to Cars</a>
-
-
+                <!-- Back to Cars Button -->
+                <a href="{{ route('cars.index') }}" class="btn btn-secondary mt-3">Back to Cars</a>
+            </div>
+        </div>
     </div>
 @endsection

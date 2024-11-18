@@ -3,8 +3,15 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PayPalController;
+
 use Illuminate\Support\Facades\Route;
 
 // Route for the homepage for unauthenticated users
@@ -47,6 +54,23 @@ Route::middleware('auth')->group(function () {
     // Route for the Contact Us page
     Route::get('/contact', [PageController::class, 'contact'])->name('contact');
     Route::post('/contact', [PageController::class, 'submitContact'])->name('contact.submit');
+
+    //Routes for PAYPAL
+
+    Route::get('/paypal/payment', [PayPalController::class, 'createPayment'])->name('paypal.payment');
+    Route::get('/paypal/execute', [PayPalController::class, 'executePayment'])->name('paypal.execute');
+    Route::get('/paypal/cancel', [PayPalController::class, 'cancelPayment'])->name('paypal.cancel');
+
+    //Routes for ordering
+    Route::get('/car/{car}', [CarController::class, 'show'])->name('car.details');
+    Route::get('/order/{car}', [OrderController::class, 'create'])->name('order.car');
+    // Order Route
+    Route::get('/order/{car}', [OrderController::class, 'create'])->name('order.car');
+
+    // Store the order details (POST request)
+    Route::post('/order/{car}', [OrderController::class, 'store'])->name('order.store');
+
+
 });
 
 // Include authentication routes

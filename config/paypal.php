@@ -7,8 +7,8 @@
 return [
     'mode'    => env('PAYPAL_MODE', 'sandbox'), // 'live' for production
     'sandbox' => [
-        'client_id'     => env('PAYPAL_SANDBOX_CLIENT_ID', 'your-sandbox-client-id'),
-        'client_secret' => env('PAYPAL_SANDBOX_CLIENT_SECRET', 'your-sandbox-secret'),
+        'client_id'     => env('AQyUZmnWUujpFqbbaXQtyD8rDG-Gl9XoLg7XJpcIDR7J3C2lJH9_0DAA9SEfEjR9UD05M7VPUa6SUZOS', 'your-sandbox-client-id'),
+        'client_secret' => env('EDcHvlDypXu6CTois6H4k7KJNgl4__6OVYhOFOO4UG41pS_rNdNXNmKi7HH_5EuJEp2GHtN_qqZix3Cv', 'your-sandbox-secret'),
         'app_id'        => 'your-sandbox-app-id',
     ],
     'live' => [

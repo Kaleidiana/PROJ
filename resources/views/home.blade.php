@@ -13,7 +13,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Lamborghini</h5>
                         <p class="card-text">Description of the car.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('car.details', ['car' => 1]) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('order.car', ['car' => 1]) }}" class="btn btn-success">Order Now</a> <!-- Order Now Button -->
                     </div>
                 </div>
             </div>
@@ -25,7 +26,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Range Rover</h5>
                         <p class="card-text">Description of the car.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('car.details', ['car' => 2]) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('order.car', ['car' => 2]) }}" class="btn btn-success">Order Now</a> <!-- Order Now Button -->
                     </div>
                 </div>
             </div>
@@ -37,7 +39,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Maybach</h5>
                         <p class="card-text">Description of the car.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('car.details', ['car' => 3]) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('order.car', ['car' => 3]) }}" class="btn btn-success">Order Now</a> <!-- Order Now Button -->
                     </div>
                 </div>
             </div>
@@ -49,9 +52,10 @@
                 <div class="card">
                     <img src="{{ asset('images/car4.jpg') }}" class="card-img-top" alt="Car 4">
                     <div class="card-body">
-                        <h5 class="card-title">Porshe</h5>
+                        <h5 class="card-title">Porsche</h5>
                         <p class="card-text">Description of the car.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('car.details', ['car' => 4]) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('order.car', ['car' => 4]) }}" class="btn btn-success">Order Now</a> <!-- Order Now Button -->
                     </div>
                 </div>
             </div>
@@ -63,7 +67,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Sedan</h5>
                         <p class="card-text">Description of the car.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('car.details', ['car' => 5]) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('order.car', ['car' => 5]) }}" class="btn btn-success">Order Now</a> <!-- Order Now Button -->
                     </div>
                 </div>
             </div>
@@ -73,16 +78,13 @@
                 <div class="card">
                     <img src="{{ asset('images/car3.jpg') }}" class="card-img-top" alt="Car 6">
                     <div class="card-body">
-                        <h5 class="card-title">Mercedez</h5>
+                        <h5 class="card-title">Mercedes</h5>
                         <p class="card-text">Description of the car.</p>
-                        <a href="#" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('car.details', ['car' => 6]) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ route('order.car', ['car' => 6]) }}" class="btn btn-success">Order Now</a> <!-- Order Now Button -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-
-@section('footer')
-
 @endsection
