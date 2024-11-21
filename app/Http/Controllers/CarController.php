@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     // Show the list of all cars
     public function index()
     {
@@ -29,22 +24,25 @@ class CarController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'carname' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'description' => 'required|string',
-            'image' => 'required|image',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensure proper image validation
         ]);
 
+        // Save the file and store the path
+        $filePath = $request->file('image')->store('cars', 'public');
+
+        // Save data to the database
         Car::create([
-            'name' => $request->name,
+            'carname' => $request->carname,
             'price' => $request->price,
             'description' => $request->description,
-            'image' => $request->file('image')->store('cars', 'public'),
+            'image' => $filePath,
         ]);
 
-        return redirect()->route('cars.index')->with('success', 'Car added successfully.');
+        return redirect()->route('cars.index')->with('success', 'Car created successfully');
     }
-
 
     // Show a specific car's details
     public function show(Car $car)
@@ -62,20 +60,26 @@ class CarController extends Controller
     public function update(Request $request, Car $car)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
+            'carname' => 'required|string|max:255',
+            'price' => 'required|numeric',
             'description' => 'required|string',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $car->update([
-            'name' => $request->name,
-            'price' => $request->price,
-            'description' => $request->description,
-            'image' => $request->hasFile('image') ? $request->file('image')->store('cars', 'public') : $car->image,
-        ]);
+        // Update the car details
+        $car->carname = $request->carname;
+        $car->price = $request->price;
+        $car->description = $request->description;
 
-        return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('cars', 'public');
+            $car->image = $imagePath;
+        }
+
+        $car->save();
+
+        return redirect()->route('cars.index')->with('success', 'Car updated successfully!');
     }
 
     // Delete a car

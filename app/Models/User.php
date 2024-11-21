@@ -21,7 +21,8 @@ class User extends Authenticatable
         'password',
         'phone',             // New attribute
         'role',              // New attribute for user roles
-        'profile_picture',    // New attribute for storing user profile picture
+        'profile_picture',
+        'is_admin'    // New attribute for storing user profile picture
     ];
 
     /**

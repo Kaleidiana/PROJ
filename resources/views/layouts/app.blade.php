@@ -8,6 +8,7 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
 <body>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -41,7 +42,7 @@
     </nav>
 
     <!-- Footer -->
-    <footer class="text-center text-white py-3" style="background-color: #1f1e1e;">
+    <footer class="text-center text-white py-3" style="background-color: #1f1e1e; height: 65px;" >
         <p>&copy; 2024 MotorShift. All rights reserved.</p>
     </footer>
 

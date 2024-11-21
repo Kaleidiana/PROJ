@@ -12,7 +12,7 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', // User who made the order
+        'user_id', // User who made the order
         'car_id',  // The car being ordered
         'quantity', // The quantity of cars being ordered
         'total_price', // The total price of the order

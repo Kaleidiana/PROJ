@@ -16,13 +16,13 @@
                 <p><strong>Description: </strong>{{ $car->description }}</p>
 
                 <!-- Order Now Button -->
-                <form action="{{ route('order.create', $car->id) }}" method="POST">
+                {{-- <form action="{{ route('order.create', $car->id) }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-success">Order Now</button>
-                </form>
+                </form> --}}
 
                 <!-- Back to Cars Button -->
-                <a href="{{ route('cars.index') }}" class="btn btn-secondary mt-3">Back to Cars</a>
+                <a href="{{ route('home') }}" class="btn btn-secondary mt-3">Back to Cars</a>
             </div>
         </div>
     </div>

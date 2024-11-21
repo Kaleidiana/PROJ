@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\AdminController;
@@ -21,7 +20,7 @@ Route::get('/', function () {
 
 // Route for the admin dashboard
 Route::get('/admin', [AdminController::class, 'index'])
-    ->middleware(['auth', 'admin']) // Ensure the user is authenticated and an admin
+    ->middleware(['auth', 'IsAdmin']) // Ensure the user is authenticated and an admin
     ->name('admin.index');
 
 // Route for the dashboard (user dashboard)
@@ -30,7 +29,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 // Group routes for admin section
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+Route::prefix('admin')->middleware(['auth'])->group(function () {
     // Route for the admin cars management (CRUD)
     Route::resource('cars', CarController::class);
 });
@@ -60,21 +59,80 @@ Route::middleware('auth')->group(function () {
     Route::get('/paypal/payment', [PayPalController::class, 'createPayment'])->name('paypal.payment');
     Route::get('/paypal/execute', [PayPalController::class, 'executePayment'])->name('paypal.execute');
     Route::get('/paypal/cancel', [PayPalController::class, 'cancelPayment'])->name('paypal.cancel');
+    Route::post('/paypal/notify', function (Request $request) {
+        // Log or process PayPal notification data
+        Log::info('PayPal Notification:', $request->all());
+
+        return response('OK', 200);
+    })->name('paypal.notify');
 
     //Routes for ordering
-    // Route to view a single car's details
-    Route::get('cars/{car}', [CarController::class, 'show'])->name('cars.show');
-
     Route::get('/car/{car}', [CarController::class, 'show'])->name('car.details');
-    Route::get('/order/{car}', [OrderController::class, 'create'])->name('order.car');
+    Route::get('/orders/{car}', [OrderController::class, 'create'])->name('order.car');
+
+    Route::get('/checkout/{car}', [OrderController::class, 'checkout'])->name('order.checkout');
+    // Redirect user to the checkout page for the car
+    Route::get('/orders/{car}/checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+
+
+
+    Route::get('/orders/confirmation', [OrderController::class, 'confirmation'])->name('order.confirmation');
+
+    //ORDERS//
+    Route::get('/orders/{id}/checkout', [OrderController::class, 'showCheckout'])->name('order.checkout');
+
+
+
+// Define POST route for processing the order creation
+    Route::post('/orders/{id}/create', [OrderController::class, 'createOrder'])->name('order.create');
+    // Route::post('/orders/{car}/create', [OrderController::class, 'createOrder'])->name('order.create');
+
+
+
     // Order Route
 
+    // Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
 
-    // Store the order details (POST request)
-    Route::post('/order/{car}', [OrderController::class, 'store'])->name('order.store');
+
+    // // Store the order details (POST request)
+    // Route::post('/order/{car}', [OrderController::class, 'store'])->name('order.store');
+
+    Route::get('/orders/{car}/create', [OrderController::class, 'create'])->name('order.create');
+    Route::get('/orders/success/{car}', [OrderController::class, 'success'])->name('order.success');
+    Route::get('/orders/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+
+    // Display checkout page for the car
+    Route::get('orders/checkout/{car}', [OrderController::class, 'checkout'])->name('orders.checkout');
+    Route::get('order/{car}/checkout', [OrderController::class, 'checkout'])->name('order.car');
+    // Route for checkout page
+    // Route::get('orders/checkout/{car}', [OrderController::class, 'checkout'])->name('orders.checkout');
+
+
+
 
 
 });
+
+// Include authentication routes
+require __DIR__.'/auth.php';
+
+
+
+    // Order Route
+
+    // Route::get('/order/create', [OrderController::class, 'create'])->name('order.create');
+
+
+    // // Store the order details (POST request)
+    // Route::post('/order/{car}', [OrderController::class, 'store'])->name('order.store');
+
+    // Route::get('/order/{car}/create', [OrderController::class, 'create'])->name('order.create');
+    Route::get('/order/success/{car}', [OrderController::class, 'success'])->name('order.success');
+    Route::get('/order/cancel', [OrderController::class, 'cancel'])->name('order.cancel');
+
+
+
+
 
 // Include authentication routes
 require __DIR__.'/auth.php';

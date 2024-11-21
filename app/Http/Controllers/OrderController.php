@@ -1,41 +1,130 @@
 <?php
-// app/Http/Controllers/OrderController.php
-
-// app/Http/Controllers/OrderController.php
 
 namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class OrderController extends Controller
 {
-    // Store the order details (POST request)
-    public function store(Request $request, Car $car)
+    // Redirect to PayPal for payment
+    public function create(Request $request, Car $car)
     {
-        // Validate the incoming order data
-        $request->validate([
-            'user_id' => 'required|exists:users,id', // Validate that user exists
-            'car_id' => 'required|exists:cars,id',  // Validate that car exists
-            'quantity' => 'required|integer|min:1', // Validate quantity
-        ]);
+        // Get PayPal credentials from env
+        $paypalClientId = env('PAYPAL_CLIENT_ID');
+        $paypalSecret = env('PAYPAL_SECRET');
 
-        // Calculate the total price (assumes `car` model has a `price` attribute)
-        $totalPrice = $car->price * $request->quantity; // Total price is based on quantity
+        // Check if the credentials are valid
+        if (is_null($paypalClientId) || is_null($paypalSecret)) {
+            return redirect()->route('cars.index')->with('error', 'PayPal credentials are not set.');
+        }
+
+        // Get the quantity from the form submission
+        $quantity = $request->input('quantity', 1); // Default to 1 if no quantity is provided
+        $totalPrice = $car->price * $quantity;
+
+        // PayPal API request to create a payment
+        $paypalResponse = Http::withBasicAuth($paypalClientId, $paypalSecret)
+            ->post('https://api-m.sandbox.paypal.com/v2/checkout/orders', [
+                'intent' => 'CAPTURE',
+                'purchase_units' => [
+                    [
+                        'amount' => [
+                            'currency_code' => 'USD',
+                            'value' => $totalPrice,
+                        ],
+                        'description' => "Order for car: {$car->carname}",
+                    ],
+                ],
+                'application_context' => [
+                    'return_url' => route('order.success', $car),
+                    'cancel_url' => route('order.cancel'),
+                ],
+            ]);
+
+        $responseData = $paypalResponse->json();
+
+        if ($paypalResponse->successful()) {
+            // Redirect the user to PayPal approval URL
+            $approvalUrl = collect($responseData['links'])->firstWhere('rel', 'approve')['href'];
+            return redirect($approvalUrl);
+        } else {
+            return redirect()->route('cars.index')->with('error', 'Unable to process payment at this time.');
+        }
+    }
+
+    // Handle PayPal success callback
+    public function success(Request $request, Car $car)
+    {
+        // Get the PayPal order ID from the query
+        $paypalOrderId = $request->query('token'); // Ensure this is correct, might be 'orderID'
+
+        // Capture the PayPal payment
+        $paypalResponse = Http::withBasicAuth(env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET'))
+            ->post("https://api-m.sandbox.paypal.com/v2/checkout/orders/{$paypalOrderId}/capture");
+
+        // Check if PayPal response is successful
+        if (!$paypalResponse->successful()) {
+            \Log::error('PayPal response error: ', $paypalResponse->json());
+            return redirect()->route('cars.index')->with('error', 'Unable to process payment at this time.');
+        }
+
+        // Get the quantity from the request to store in the order
+        $quantity = $request->input('quantity', 1); // Default to 1 if no quantity is provided
 
         // Create the order in the database
         Order::create([
-            'user_id' => auth()->id(), // Assuming the user is authenticated
+            'user_id' => auth()->id(),
             'car_id' => $car->id,
-            'quantity' => $request->quantity, // Store the quantity of cars ordered
-            'total_price' => $totalPrice,
-            'status' => 'pending', // Default status
+            'quantity' => $quantity,
+            'total_price' => $car->price * $quantity,
+            'status' => 'completed',
         ]);
 
-        // Redirect or return success message
-        return redirect()->route('cars.show', $car)->with('success', 'Order placed successfully!');
+        // Redirect to order confirmation page
+        return redirect()->route('orders.confirmation')->with('success', 'Payment successful! Your order is confirmed.');
     }
 
-    // Other methods for the controller (show, update, delete) can be added here if needed
+    // Handle PayPal cancel callback
+    public function cancel()
+    {
+        return redirect()->route('cars.index')->with('error', 'Payment canceled.');
+    }
+
+    // Show checkout page for the car
+    public function checkout(Car $car)
+    {
+        // Retrieve the order details (car, price, etc.)
+        return view('orders.checkout', compact('car'));
+    }
+
+    // Show order confirmation page
+    public function confirmation()
+    {
+        return view('orders.confirmation');  // Make sure to create this view
+    }
+
+    // New createOrder method for initiating order creation (if needed)
+    public function createOrder(Request $request)
+    {
+        // Validate incoming request
+        $request->validate([
+            'car_id' => 'required|exists:cars,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        // Create a new order instance
+        $order = Order::create([
+            'user_id' => auth()->id(),
+            'car_id' => $request->car_id,
+            'quantity' => $request->quantity,
+            'total_price' => Car::find($request->car_id)->price * $request->quantity,
+            'status' => 'pending',
+        ]);
+
+        // Return response (can redirect or return data)
+        return redirect()->route('orders.checkout', $order)->with('success', 'Order created successfully.');
+    }
 }
